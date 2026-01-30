@@ -1,0 +1,71 @@
+name: Integration Tests
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  integration:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        laravel: ['11.*', '12.*']
+        php: ['8.2', '8.3', '8.4']
+
+    name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }} - ${{ matrix.os }}
+
+    steps:
+      - name: Checkout package
+        uses: actions/checkout@v4
+        with:
+          path: package
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, fileinfo
+
+      - name: Get Laravel major version
+        id: laravel-version
+        shell: bash
+        run: |
+          VERSION="${{ matrix.laravel }}"
+          MAJOR="${VERSION%%.*}"
+          echo "major=$MAJOR" >> $GITHUB_OUTPUT
+
+      - name: Create Laravel project
+        run: composer create-project laravel/laravel app "^${{ steps.laravel-version.outputs.major }}" --prefer-dist --no-interaction --no-scripts
+
+      - name: Configure package repository
+        working-directory: app
+        run: composer config repositories.local path ../package
+
+      - name: Require package
+        working-directory: app
+        run: composer require grnsv/l-codegen:@dev --no-interaction
+
+      - name: Run install command
+        working-directory: app
+        run: php artisan l-codegen:install --no-interaction
+
+      - name: Verify binary exists (Unix)
+        if: matrix.os != 'windows-latest'
+        working-directory: app
+        run: |
+          test -f vendor/bin/lcodegen
+          test -x vendor/bin/lcodegen
+
+      - name: Verify binary exists (Windows)
+        if: matrix.os == 'windows-latest'
+        working-directory: app
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "vendor/bin/lcodegen")) {
+            exit 1
+          }

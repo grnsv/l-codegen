@@ -1,0 +1,54 @@
+{
+  "name": "grnsv/l-codegen",
+  "description": "Thin Composer wrapper that installs grnsv/lcodegen Go binary into vendor/bin",
+  "license": "MIT",
+  "version": "0.0.0",
+  "type": "library",
+  "keywords": [
+    "laravel",
+    "codegen"
+  ],
+  "authors": [
+    {
+      "name": "grnsv"
+    }
+  ],
+  "require": {
+    "php": "^8.2",
+    "illuminate/console": "^11.0|^12.0",
+    "illuminate/http": "^11.0|^12.0",
+    "illuminate/support": "^11.0|^12.0"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^9.0",
+    "phpunit/phpunit": "^11.0",
+    "laravel/pint": "^1.13",
+    "rector/rector": "^2.3",
+    "driftingly/rector-laravel": "^2.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "LaravelCodegen\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "LaravelCodegen\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "LaravelCodegen\\LaravelCodegenServiceProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "@php vendor/bin/phpunit",
+    "test-coverage": "@php vendor/bin/phpunit --coverage-html coverage",
+    "format": "@php vendor/bin/pint",
+    "format:check": "@php vendor/bin/pint --test",
+    "rector": "@php vendor/bin/rector",
+    "rector:check": "@php vendor/bin/rector --dry-run"
+  }
+}
