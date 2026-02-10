@@ -4,7 +4,7 @@ Laravel package that downloads and installs the `lcodegen` Go binary from [GitHu
 
 ## Features
 
-- Laravel Artisan command for binary installation
+- Artisan commands for binary installation and code generation
 - Multi-platform support (Linux, macOS, Windows)
 - Multi-architecture support (x86_64, arm64, i386)
 - Checksum verification for security
@@ -25,16 +25,16 @@ php artisan l-codegen:install
 
 ## Usage
 
-After installation, you can use the `lcodegen` command:
+Generate Laravel code from an OpenAPI specification:
 
 ```bash
-vendor/bin/lcodegen --help
+php artisan l-codegen:generate openapi.yml
 ```
 
-Or if you have composer bin directory in your PATH:
+Or call the binary directly:
 
 ```bash
-lcodegen --help
+vendor/bin/lcodegen openapi.yml
 ```
 
 ## How It Works
@@ -82,6 +82,7 @@ The package includes integration tests that verify:
 - Command registration in Laravel
 - Platform detection (OS and architecture)
 - Binary installation process
+- Code generation via Artisan command
 - Service provider auto-discovery
 
 ## Troubleshooting

@@ -1,6 +1,6 @@
 {
   "name": "grnsv/l-codegen",
-  "description": "Thin Composer wrapper that installs grnsv/lcodegen Go binary into vendor/bin",
+  "description": "Laravel package for installing and running grnsv/lcodegen code generator",
   "license": "MIT",
   "version": "0.1.0",
   "type": "library",
@@ -17,6 +17,7 @@
     "php": "^8.2",
     "illuminate/console": "^11.0|^12.0",
     "illuminate/http": "^11.0|^12.0",
+    "illuminate/process": "^11.0|^12.0",
     "illuminate/support": "^11.0|^12.0"
   },
   "require-dev": {

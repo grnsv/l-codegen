@@ -39,17 +39,19 @@ composer rector
 composer rector:check
 ```
 
-### Test Installation Command Locally
+### Test Commands Locally
 ```bash
-php artisan l-codegen:install
+php artisan l-codegen:install              # Download lcodegen binary
+php artisan l-codegen:generate openapi.yml # Generate code from OpenAPI spec
 ```
 
 ## Architecture
 
 ### Package Structure
 
-- **Service Provider** (`LaravelCodegenServiceProvider`): Registers the Artisan command for console use
-- **Install Command** (`Console/InstallCommand`): Core functionality for downloading and installing the binary
+- **Service Provider** (`LaravelCodegenServiceProvider`): Registers Artisan commands for console use
+- **Install Command** (`Console/InstallCommand`): Downloads and installs the lcodegen binary from GitHub releases
+- **Generate Command** (`Console/GenerateCommand`): Runs `vendor/bin/lcodegen` against an OpenAPI spec to generate Laravel code
 - **Tests** (`tests/`): Integration tests using Orchestra Testbench
 
 ### Binary Installation Flow
