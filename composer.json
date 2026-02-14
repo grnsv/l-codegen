@@ -2,7 +2,7 @@
   "name": "grnsv/l-codegen",
   "description": "Laravel package for installing and running grnsv/lcodegen code generator",
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "library",
   "keywords": [
     "laravel",
